@@ -2,5 +2,7 @@
   "name": "Travel Destination Explorer",
   "description": "Explore countries across the world with rich data from REST Countries API, including flags, capitals, population, geography, currencies, languages, plus complete project software engineering documentation.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

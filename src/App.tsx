@@ -33,6 +33,7 @@ export default function App() {
   const [history, setHistory] = useState<string[]>(['Japan', 'France', 'Brazil']);
   const [showAiGuide, setShowAiGuide] = useState(true);
   const [aiTab, setAiTab] = useState<'chat' | 'planner'>('chat');
+  const [externalPrompt, setExternalPrompt] = useState<string | null>(null);
 
   // Handle country search submission
   const handleSearch = async (countryName: string) => {
@@ -235,13 +236,26 @@ export default function App() {
                       setShowAiGuide(true);
                       setAiTab('planner');
                     }}
+                    onAskAboutLandmark={(landmarkName) => {
+                      if (!selectedCountry) return;
+                      setShowAiGuide(true);
+                      setAiTab('chat');
+                      setExternalPrompt(
+                        `Tell me more about visiting ${landmarkName} in ${selectedCountry.commonName}, including best times to go, historical context, insider tips, and nearby highlights!`
+                      );
+                    }}
                   />
                 </div>
 
                 {/* Embedded Gemini AI Chatbox */}
                 {showAiGuide && (
                   <div className="lg:col-span-5 sticky top-20">
-                    <GeminiChatbox country={selectedCountry} initialTab={aiTab} />
+                    <GeminiChatbox
+                      country={selectedCountry}
+                      initialTab={aiTab}
+                      externalPrompt={externalPrompt}
+                      onClearExternalPrompt={() => setExternalPrompt(null)}
+                    />
                   </div>
                 )}
               </div>

@@ -19,19 +19,28 @@ import {
   Check,
   AlertCircle,
   Calendar,
-  MessageSquare
+  MessageSquare,
+  Download,
+  Filter,
+  CheckCheck
 } from 'lucide-react';
+
+const CHAT_STORAGE_KEY = 'travel_explorer_chat_history_v2';
 
 interface GeminiChatboxProps {
   country: CountryDetails | null;
   className?: string;
   initialTab?: 'chat' | 'planner';
+  externalPrompt?: string | null;
+  onClearExternalPrompt?: () => void;
 }
 
 export const GeminiChatbox: React.FC<GeminiChatboxProps> = ({
   country,
   className = '',
-  initialTab = 'chat'
+  initialTab = 'chat',
+  externalPrompt = null,
+  onClearExternalPrompt
 }) => {
   const [activeTab, setActiveTab] = useState<'chat' | 'planner'>(initialTab);
 
@@ -41,12 +50,29 @@ export const GeminiChatbox: React.FC<GeminiChatboxProps> = ({
     }
   }, [initialTab]);
 
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  // Load persistent chat history from localStorage
+  const [messages, setMessages] = useState<ChatMessage[]>(() => {
+    try {
+      const saved = localStorage.getItem(CHAT_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to load chat history from localStorage', e);
+    }
+    return [];
+  });
+
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [filterByCountry, setFilterByCountry] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const lastCountryRef = useRef<string | null>(null);
 
   // Auto-scroll to bottom of messages
   const scrollToBottom = () => {
@@ -59,25 +85,53 @@ export const GeminiChatbox: React.FC<GeminiChatboxProps> = ({
     }
   }, [messages, loading, activeTab]);
 
-  // Initial greeting message when country changes or initializes
+  // Save to localStorage whenever messages change
+  useEffect(() => {
+    try {
+      if (messages.length > 0) {
+        localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(messages));
+      }
+    } catch (e) {
+      console.warn('Failed to save chat history to localStorage', e);
+    }
+  }, [messages]);
+
+  // When country changes, KEEP all previous chats and append milestone transition
   useEffect(() => {
     if (country) {
-      const initialGreeting: ChatMessage = {
-        id: `init-${country.id}-${Date.now()}`,
-        role: 'assistant',
-        text: `Hello! I'm your **Gemini AI Travel Guide** for **${country.commonName}** 🌟\n\nI can help you design custom itineraries in **${country.capital}**, recommend authentic local foods, explain cultural customs, or suggest what to pack. You can also use the **Trip Planner** tab to generate a multi-day plan!`,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        countryName: country.commonName
-      };
-
-      setMessages((prev) => {
-        if (prev.length === 0 || (prev.length === 1 && prev[0].id.startsWith('init-'))) {
-          return [initialGreeting];
-        }
-        return prev;
-      });
+      if (lastCountryRef.current && lastCountryRef.current !== country.id) {
+        const transitionNotice: ChatMessage = {
+          id: `switch-${country.id}-${Date.now()}`,
+          role: 'assistant',
+          text: `📍 *Now exploring **${country.commonName}** (${country.capital})*\nAll your previous chats have been preserved. What would you like to know about ${country.commonName}?`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          countryName: country.commonName
+        };
+        setMessages((prev) => [...prev, transitionNotice]);
+      } else if (messages.length === 0) {
+        const initialGreeting: ChatMessage = {
+          id: `init-${country.id}-${Date.now()}`,
+          role: 'assistant',
+          text: `Hello! I'm your **Gemini AI Travel Guide** for **${country.commonName}** 🌟\n\nI can help you design custom itineraries in **${country.capital}**, recommend authentic local foods, explain cultural customs, or suggest what to pack. You can also use the **Trip Planner** tab to generate a multi-day plan!`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          countryName: country.commonName
+        };
+        setMessages([initialGreeting]);
+      }
+      lastCountryRef.current = country.id;
     }
   }, [country?.id]);
+
+  // Handle external prompts (e.g. clicking "Ask AI" on a map landmark)
+  useEffect(() => {
+    if (externalPrompt) {
+      setActiveTab('chat');
+      handleSend(externalPrompt);
+      if (onClearExternalPrompt) {
+        onClearExternalPrompt();
+      }
+    }
+  }, [externalPrompt]);
 
   const handleSend = async (textToSend?: string) => {
     const text = (textToSend || inputValue).trim();
@@ -131,20 +185,42 @@ export const GeminiChatbox: React.FC<GeminiChatboxProps> = ({
   };
 
   const handleClearHistory = () => {
-    if (country) {
-      setMessages([
-        {
-          id: `init-${country.id}-${Date.now()}`,
-          role: 'assistant',
-          text: `Chat cleared! Ready to help you explore **${country.commonName}** or plan your trip. What's on your mind?`,
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          countryName: country.commonName
-        }
-      ]);
-    } else {
-      setMessages([]);
+    if (window.confirm('Are you sure you want to clear your saved chat history?')) {
+      localStorage.removeItem(CHAT_STORAGE_KEY);
+      if (country) {
+        setMessages([
+          {
+            id: `init-${country.id}-${Date.now()}`,
+            role: 'assistant',
+            text: `Chat cleared! Ready to help you explore **${country.commonName}** or plan your trip. What's on your mind?`,
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            countryName: country.commonName
+          }
+        ]);
+      } else {
+        setMessages([]);
+      }
+      setErrorMessage(null);
     }
-    setErrorMessage(null);
+  };
+
+  const handleExportAllChats = () => {
+    if (messages.length === 0) return;
+    let exportText = `# Gemini AI Travel Guide — Chat History\nExported on: ${new Date().toLocaleString()}\n\n`;
+
+    messages.forEach((m) => {
+      exportText += `### [${m.timestamp}] ${m.role === 'user' ? '👤 Traveler' : '🤖 Gemini'} ${m.countryName ? `(${m.countryName})` : ''}\n${m.text}\n\n---\n\n`;
+    });
+
+    const blob = new Blob([exportText], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `travel_guide_chat_history_${Date.now()}.md`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const handleCopy = (id: string, text: string) => {
@@ -152,6 +228,16 @@ export const GeminiChatbox: React.FC<GeminiChatboxProps> = ({
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
   };
+
+  // Filter messages if user only wants to see messages related to currently selected country
+  const displayedMessages = React.useMemo(() => {
+    if (!filterByCountry || !country?.commonName) {
+      return messages;
+    }
+    return messages.filter(
+      (m) => !m.countryName || m.countryName.toLowerCase() === country.commonName.toLowerCase()
+    );
+  }, [messages, filterByCountry, country?.commonName]);
 
   // Quick suggestions tailored to current country
   const quickPrompts = country
@@ -194,13 +280,22 @@ export const GeminiChatbox: React.FC<GeminiChatboxProps> = ({
         </div>
 
         {activeTab === 'chat' && (
-          <button
-            onClick={handleClearHistory}
-            className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
-            title="Reset conversation"
-          >
-            <RotateCcw className="w-4 h-4" />
-          </button>
+          <div className="flex items-center space-x-1">
+            <button
+              onClick={handleExportAllChats}
+              className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
+              title="Export all chats as Markdown"
+            >
+              <Download className="w-4 h-4" />
+            </button>
+            <button
+              onClick={handleClearHistory}
+              className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
+              title="Clear saved chat history"
+            >
+              <RotateCcw className="w-4 h-4" />
+            </button>
+          </div>
         )}
       </div>
 
@@ -217,6 +312,9 @@ export const GeminiChatbox: React.FC<GeminiChatboxProps> = ({
           >
             <MessageSquare className="w-3.5 h-3.5" />
             <span>AI Chat</span>
+            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-slate-800 text-slate-300 font-mono">
+              {messages.length}
+            </span>
           </button>
 
           <button
@@ -233,9 +331,21 @@ export const GeminiChatbox: React.FC<GeminiChatboxProps> = ({
           </button>
         </div>
 
-        <span className="text-[10px] text-slate-400 hidden sm:inline">
-          {country?.commonName ? `Planning for ${country.commonName}` : 'Select a country'}
-        </span>
+        {/* Chats Filter / Preserved Badge */}
+        {activeTab === 'chat' && country && messages.length > 2 && (
+          <button
+            onClick={() => setFilterByCountry(!filterByCountry)}
+            className={`px-2 py-0.5 rounded text-[10px] font-medium transition-colors cursor-pointer flex items-center gap-1 ${
+              filterByCountry
+                ? 'bg-sky-500/20 text-sky-300 border border-sky-400/30'
+                : 'bg-slate-800 text-slate-400 hover:text-slate-200'
+            }`}
+            title="Toggle between all saved chats and only current country"
+          >
+            <Filter className="w-3 h-3" />
+            <span>{filterByCountry ? country.commonName : 'All Saved Chats'}</span>
+          </button>
+        )}
       </div>
 
       {/* VIEW 1: TRIP PLANNER VIEW */}
@@ -278,7 +388,7 @@ export const GeminiChatbox: React.FC<GeminiChatboxProps> = ({
 
           {/* Chat Messages Body */}
           <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50/50">
-            {messages.map((msg) => {
+            {displayedMessages.map((msg) => {
               const isUser = msg.role === 'user';
               return (
                 <div
@@ -316,6 +426,13 @@ export const GeminiChatbox: React.FC<GeminiChatboxProps> = ({
                           <Copy className="w-3 h-3" />
                         )}
                       </button>
+                    )}
+
+                    {/* Tag of country if relevant */}
+                    {msg.countryName && (
+                      <div className="mb-1 text-[10px] font-semibold tracking-wide uppercase opacity-75">
+                        📍 {msg.countryName}
+                      </div>
                     )}
 
                     <div className="whitespace-pre-wrap font-sans">
@@ -371,7 +488,7 @@ export const GeminiChatbox: React.FC<GeminiChatboxProps> = ({
                     <span className="w-2 h-2 rounded-full bg-sky-500 animate-bounce" style={{ animationDelay: '150ms' }} />
                     <span className="w-2 h-2 rounded-full bg-sky-500 animate-bounce" style={{ animationDelay: '300ms' }} />
                     <span className="text-xs text-slate-400 font-medium ml-2">
-                      Gemini is planning your trip...
+                      Gemini is thinking...
                     </span>
                   </div>
                 </div>
@@ -423,7 +540,9 @@ export const GeminiChatbox: React.FC<GeminiChatboxProps> = ({
               </button>
             </form>
             <div className="mt-1.5 flex items-center justify-between text-[10px] text-slate-400 px-1">
-              <span>Powered by Gemini 3.8 Flash</span>
+              <span className="flex items-center gap-1 text-emerald-600 font-medium">
+                <CheckCheck className="w-3 h-3" /> Chats kept in browser
+              </span>
               <span>Press Enter to send</span>
             </div>
           </div>
