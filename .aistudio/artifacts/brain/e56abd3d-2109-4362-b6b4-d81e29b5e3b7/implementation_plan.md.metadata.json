@@ -1,0 +1,6 @@
+{
+  "summary":  "Implementation plan for embedding a server-side Gemini 3.8 Flash AI Travel Guide and Trip Planner chatbox alongside destination country details, with automated country-context grounding, quick prompt suggestions, and conversational streaming.",
+  "updatedAt":  "2026-10-25T18:57:58.516319034Z",
+  "requestFeedback":  true,
+  "userFacing":  true
+}

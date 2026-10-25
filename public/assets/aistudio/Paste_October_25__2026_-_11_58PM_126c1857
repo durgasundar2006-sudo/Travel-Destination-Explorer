@@ -1,0 +1,752 @@
+# TRAVEL DESTINATION EXPLORER — SOFTWARE PROJECT PROMPTS
+
+## PROMPT 01: PROBLEM AND OPPORTUNITY ANALYSIS
+
+### Part 1 of 2. Replace each input placeholder with current project material. Copy both prompt panels together.
+
+**Role**
+
+Act as a product analyst.
+
+**Inputs**
+
+**PROJECT BRIEF:** Travel Destination Explorer is a beginner-friendly website developed using Python and Streamlit. It allows users to search for a country and explore its basic information using the REST Countries API.
+
+**TARGET USERS:** Students, travellers and users who want to explore basic country information.
+
+**EVIDENCE:** Not yet collected. This is a student project intended to provide a simple way to explore country information.
+
+**GOALS:** Help users search for a country and view its information in a clear, simple interface. Do not invent success figures.
+
+**CONSTRAINTS:** Use Python, Streamlit, REST Countries API, `urllib.request` and `json`. Use Google AI Studio for code generation. Keep the code beginner-friendly. An internet connection is required to retrieve country information. No database, login system or separate backend is required.
+
+**Working Rules**
+
+Ask for essential missing information before proceeding. Label assumptions and do not invent decisions.
+
+Mode: [Advice only / Authorized execution]. In advice-only mode, provide instructions and proposed changes without editing files or running commands. In execution mode, state the approved scope and use only available, authorized tools. Report unavailable checks as not run.
+
+Stop for approval before publication, paid services, destructive changes or actions outside the agreed scope.
+
+### Part 2 of 2. Copy this panel together with the preceding input panel.
+
+**Task**
+
+1. Define the problem, affected users, user roles and pain points.
+2. Identify business objectives and measurable user outcomes.
+3. Assess current approaches, their limitations and alternative solutions.
+4. Separate core needs, optional features and initial exclusions.
+5. Propose a realistic first release and explain its distinctive value.
+6. Identify suitable delivery platforms and technology options without fixing the architecture prematurely.
+7. Document accessibility, connectivity, data and integration considerations.
+8. List risks, assumptions, dependencies and stakeholder questions.
+9. Recommend how to validate the problem and evaluate success.
+
+**Required Output**
+
+A structured analysis with a prioritized scope, alternatives, assumptions register and validation actions.
+
+**Quality Rules**
+
+Do not invent research, demand or performance claims. Explain unfamiliar terminology.
+
+Identify decisions that require stakeholder confirmation.
+
+---
+
+## PROMPT 02: PRODUCT REQUIREMENTS
+
+### Part 1 of 2. Replace each input placeholder with current project material. Copy both prompt panels together.
+
+**Role**
+
+Act as a product manager.
+
+**Inputs**
+
+**APPROVED ANALYSIS:** [From Prompt 01 (docs/01-problem-analysis.md): attach the reviewed problem analysis, scope and validation findings for Travel Destination Explorer.]
+
+**PROJECT CONTEXT:** Travel Destination Explorer is a Python + Streamlit website that lets users search for a country and view its information using the REST Countries API.
+
+**ROLES:** Students, travellers and users who want to explore country information. Confirm responsibilities with the project owner.
+
+**CONSTRAINTS:** Use Python, Streamlit, REST Countries API, `urllib.request` and `json`. Google AI Studio is used for code generation. Keep the code beginner-friendly. No database, login system or separate backend is required.
+
+**Working Rules**
+
+Ask for essential missing information before proceeding. Label assumptions and do not invent decisions.
+
+Mode: [Advice only / Authorized execution]. In advice-only mode, provide instructions and proposed changes without editing files or running commands. In execution mode, state the approved scope and use only available, authorized tools. Report unavailable checks as not run.
+
+Stop for approval before publication, paid services, destructive changes or actions outside the agreed scope.
+
+### Part 2 of 2. Copy this panel together with the preceding input panel.
+
+**Task**
+
+1. State the product name, description, problem, target users and pain points.
+2. Define the solution, business goals, product goals and success measures.
+3. Describe user roles, stories and complete user journeys.
+4. Assign requirement IDs and prioritize functional requirements.
+5. Specify measurable non-functional requirements and mark unknown targets.
+6. Separate core features, optional features and out-of-scope work.
+7. Define supported platforms, accessibility, offline behavior and device needs.
+8. Document data, permissions, integrations and privacy expectations.
+9. Write acceptance criteria for each core requirement.
+10. Record risks, assumptions, dependencies, open questions and release conditions.
+
+**Required Output**
+
+A complete PRD with requirement IDs and a requirement-to-acceptance-criterion mapping.
+
+**Quality Rules**
+
+Do not invent targets or stakeholder decisions. Distinguish committed requirements from proposed improvements.
+
+---
+
+## PROMPT 03: UI AND USER EXPERIENCE DESIGN
+
+### Part 1 of 2. Replace each input placeholder with current project material. Copy both prompt panels together.
+
+**Role**
+
+Act as a UI/UX designer.
+
+**Inputs**
+
+**PRD:** [From Prompt 02 (docs/02-requirements.md): attach the approved Product Requirements Document (PRD).]
+
+**USER JOURNEYS:** [From Prompt 02: use the country-search journey and linked requirement IDs.]
+
+**ROLES:** [Use confirmed user roles and permissions. This project does not require user accounts or login.]
+
+**PLATFORMS:** A web browser running the Python + Streamlit website.
+
+**BRAND AND ACCESSIBILITY NEEDS:** Create a clean, professional and beginner-friendly interface. Include a country search input, search button, country flag and clearly arranged country information. Display common name, capital, region, population, area, languages and currencies. Include clear empty-input, loading, invalid-country and API-error states. Use readable text and a simple layout.
+
+**Working Rules**
+
+Ask for essential missing information before proceeding. Label assumptions and do not invent decisions.
+
+Mode: [Advice only / Authorized execution]. In advice-only mode, provide instructions and proposed changes without editing files or running commands. In execution mode, state the approved scope and use only available, authorized tools. Report unavailable checks as not run.
+
+Stop for approval before publication, paid services, destructive changes or actions outside the agreed scope.
+
+### Part 2 of 2. Copy this panel together with the preceding input panel.
+
+**Task**
+
+1. Map screens, commands or service operations to users, purposes and requirement IDs.
+2. Define navigation or invocation steps and complete task flows.
+3. Produce screen wireframes where relevant; otherwise specify command syntax, inputs and outputs.
+4. For screens, define components and visual styles; for non-screen projects, define consistent output and response formats.
+5. Define progress, empty results, success, errors and unavailable operations for the chosen interaction channel.
+6. Write field or parameter descriptions, validation messages and recovery actions.
+7. For screens, specify keyboard access, focus and contrast; otherwise specify help, error codes and safe retry behavior.
+8. Describe device, terminal or calling-system compatibility as applicable.
+9. Prepare a usability test with tasks and observation criteria.
+10. Provide a design review checklist and open decisions.
+
+**Required Output**
+
+A screen, command or service interaction specification with requirement mapping and a validation plan.
+
+**Quality Rules**
+
+Do not invent research. Keep the design within scope. For projects without screens, specify commands, inputs, outputs and feedback; mark screen-only tasks N/A with reasons.
+
+Distinguish proposed choices from confirmed requirements.
+
+---
+
+## PROMPT 04: SYSTEM ARCHITECTURE
+
+### Part 1 of 2. Replace each input placeholder with current project material. Copy both prompt panels together.
+
+**Role**
+
+Act as a software architect.
+
+**Inputs**
+
+**PRD:** [From Prompt 02 (docs/02-requirements.md): attach the approved requirements and non-functional targets.]
+
+**UI/UX SPECIFICATION:** [From Prompt 03 (docs/03-ui-ux-specification.md): attach the reviewed interaction specification and user flows.]
+
+**TEAM SKILLS:** Beginner-level Python and Streamlit skills. Keep the implementation easy to understand and maintain.
+
+**EXISTING SYSTEM:** New project: Travel Destination Explorer. Use Python and Streamlit to retrieve country information from the REST Countries API.
+
+**CONSTRAINTS:** Use `https://restcountries.com/v3.1/name/{country}` as the API endpoint. Use `urllib.request` and `json` for requests and response parsing. No database, login system or separate backend is required. Google AI Studio is the code-generation tool. Keep the implementation beginner-friendly.
+
+**Working Rules**
+
+Ask for essential missing information before proceeding. Label assumptions and do not invent decisions.
+
+Mode: [Advice only / Authorized execution]. In advice-only mode, provide instructions and proposed changes without editing files or running commands. In execution mode, state the approved scope and use only available, authorized tools. Report unavailable checks as not run.
+
+Stop for approval before publication, paid services, destructive changes or actions outside the agreed scope.
+
+### Part 2 of 2. Copy this panel together with the preceding input panel.
+
+**Task**
+
+1. Recommend the technology stack and explain important trade-offs.
+2. Define client architecture for each supported platform.
+3. Specify backend responsibilities, or justify a software project without a backend.
+4. Select storage and define authentication and authorization where required.
+5. Describe external services and optional AI integration.
+6. Map requests, events, data flow and failure paths.
+7. Define major components and a folder structure with responsibilities.
+8. Provide a clear architecture diagram.
+9. Describe security boundaries, configuration and private credential handling.
+10. Explain build, distribution, updates, synchronization and maintenance.
+11. Identify simplifications, future growth options and technical risks.
+
+**Required Output**
+
+A structured architecture proposal with diagrams, decision rationale, component responsibilities and unresolved decisions.
+
+**Quality Rules**
+
+Avoid unnecessary technologies. Do not silently change approved requirements. Explain assumptions and alternatives.
+
+---
+
+## PROMPT 05: DATA AND STORAGE DESIGN
+
+### Part 1 of 2. Replace each input placeholder with current project material. Copy both prompt panels together.
+
+**Role**
+
+Act as a data architect.
+
+**Inputs**
+
+**PRD:** [From Prompt 02: attach requirements involving country information, permissions and privacy.]
+
+**ARCHITECTURE:** [From Prompt 04: attach approved storage choices, components and data flows.]
+
+**DATA OWNERSHIP:** Country information is retrieved from the public REST Countries API. The project does not collect personal information or require user accounts.
+
+**RETENTION AND ACCESS NEEDS:** No persistent database or long-term storage is required. Country information is fetched when the user searches. Use only the information needed to display the requested country details.
+
+**Working Rules**
+
+Ask for essential missing information before proceeding. Label assumptions and do not invent decisions.
+
+Mode: [Advice only / Authorized execution]. In advice-only mode, provide instructions and proposed changes without editing files or running commands. In execution mode, state the approved scope and use only available, authorized tools. Report unavailable checks as not run.
+
+Stop for approval before publication, paid services, destructive changes or actions outside the agreed scope.
+
+### Part 2 of 2. Copy this panel together with the preceding input panel.
+
+**Task**
+
+1. Determine whether persistent storage is necessary and justify the storage model.
+2. Define entities, purposes, fields and data types.
+3. Specify identifiers, relationships, required and optional fields.
+4. Define validation, uniqueness, integrity constraints and useful indexes.
+5. Provide SQL schema or equivalent storage definitions as appropriate.
+6. Provide a relationship diagram and explain each entity.
+7. Describe sensitive fields, permissions and access boundaries.
+8. Specify retention, deletion, migrations, backup and restoration.
+9. Address synchronization and conflict handling where relevant.
+10. For software projects without persistence, describe the state model and its lifecycle.
+
+**Required Output**
+
+A complete data specification with schema definitions, field rules, relationships and operational considerations.
+
+**Quality Rules**
+
+Avoid unnecessary collection and duplicated data. Use no real personal information or credentials. Mark decisions requiring confirmation.
+
+---
+
+## PROMPT 06: API AND INTERFACE SPECIFICATIONS
+
+### Part 1 of 2. Replace each input placeholder with current project material. Copy both prompt panels together.
+
+**Role**
+
+Act as an interface designer.
+
+**Inputs**
+
+**PRD:** [From Prompt 02: attach feature requirements and their IDs.]
+
+**ARCHITECTURE:** [From Prompt 04: attach component boundaries and communication decisions.]
+
+**DATA MODEL:** [From Prompt 05: attach the no-database decision and the country information fields to be displayed.]
+
+**ACCESS MODEL:** This project does not require login, user roles or a database. Country information is retrieved from a public API.
+
+**COMPATIBILITY NEEDS:** Use Python, Streamlit, `urllib.request` and `json`. API endpoint: `https://restcountries.com/v3.1/name/{country}`. The website requires an internet connection to retrieve API responses.
+
+**Working Rules**
+
+Ask for essential missing information before proceeding. Label assumptions and do not invent decisions.
+
+Mode: [Advice only / Authorized execution]. In advice-only mode, provide instructions and proposed changes without editing files or running commands. In execution mode, state the approved scope and use only available, authorized tools. Report unavailable checks as not run.
+
+Stop for approval before publication, paid services, destructive changes or actions outside the agreed scope.
+
+### Part 2 of 2. Copy this panel together with the preceding input panel.
+
+**Task**
+
+1. Choose suitable communication methods and group interfaces by feature.
+2. For HTTP endpoints, define method, route, purpose and authorization.
+3. Specify path and query parameters, body schema and validation.
+4. Define successful response structures and status codes.
+5. Define error structures, error codes and recovery behavior.
+6. Describe relevant data operations and external calls.
+7. Address timeouts, retries, duplicate requests and compatibility.
+8. For non-HTTP interfaces, specify inputs, outputs, permissions, errors and side effects.
+9. Provide an implementation order and interface verification checklist.
+
+**Required Output**
+
+A consistent contract specification with request/response schemas, error contracts and interface tests.
+
+**Quality Rules**
+
+Do not add interfaces without a requirement. Mark HTTP-only items not applicable for local interfaces. Explain client error handling.
+
+---
+
+## PROMPT 07: PROJECT DOCUMENTATION
+
+### Part 1 of 2. Replace each input placeholder with current project material. Copy both prompt panels together.
+
+**Role**
+
+Act as a technical writer.
+
+**Inputs**
+
+**PRD:** [From Prompt 02: attach approved scope, features and requirements for Travel Destination Explorer.]
+
+**ARCHITECTURE:** [From Prompt 04: attach Python, Streamlit and REST Countries API decisions, component flow and project structure.]
+
+**DATA MODEL:** [From Prompt 05: attach the decision not to use persistent storage.]
+
+**INTERFACES:** [From Prompt 06: document the REST Countries API endpoint, response fields and error handling.]
+
+**VERIFIED COMMANDS:** Supply commands actually run and observed results. On the first pass write Not verified; update after Prompts 08, 09 and 12.
+
+**Working Rules**
+
+Ask for essential missing information before proceeding. Label assumptions and do not invent decisions.
+
+Mode: [Advice only / Authorized execution]. In advice-only mode, provide instructions and proposed changes without editing files or running commands. In execution mode, state the approved scope and use only available, authorized tools. Report unavailable checks as not run.
+
+Stop for approval before publication, paid services, destructive changes or actions outside the agreed scope.
+
+### Part 2 of 2. Copy this panel together with the preceding input panel.
+
+**Task**
+
+1. Describe the product, problem, solution, features and supported platforms.
+2. Include the technology stack, architecture and repository structure.
+3. Document prerequisites and installation.
+4. List configuration variables using safe placeholders.
+5. Separate client, backend and storage setup instructions where applicable.
+6. Document interface references, tests and build commands.
+7. Explain deployment, distribution, updates and rollback.
+8. Provide a walkthrough outline and screenshot placeholders.
+9. Record limitations, troubleshooting and future work.
+10. Identify contributors, support contacts and maintenance ownership.
+
+**Required Output**
+
+A professional README and a list of unresolved documentation items.
+
+**Quality Rules**
+
+Do not invent project facts or claim commands were tested. Never include private credentials. Mark inapplicable sections clearly.
+
+---
+
+## PROMPT 08: PROJECT INITIALIZATION
+
+### Part 1 of 2. Replace each input placeholder with current project material. Copy both prompt panels together.
+
+**Role**
+
+Act as a lead developer.
+
+**Inputs**
+
+**PRD:** [From Prompt 02: attach the approved PRD.]
+
+**ARCHITECTURE:** [From Prompt 04: attach the approved Python + Streamlit stack, folder structure and component responsibilities.]
+
+**INTERFACES:** [From Prompt 06: attach the REST Countries API endpoint and response-handling requirements.]
+
+**DATA MODEL:** [From Prompt 05: attach the no-database decision and temporary application-state model.]
+
+**README:** [From Prompt 07: attach the draft README; distinguish proposed commands from verified ones.]
+
+**REPOSITORY:** Provide the permitted project folder or repository and current status; state Empty project if no code exists.
+
+**Working Rules**
+
+Ask for essential missing information before proceeding. Label assumptions and do not invent decisions.
+
+Mode: [Advice only / Authorized execution]. In advice-only mode, provide instructions and proposed changes without editing files or running commands. In execution mode, state the approved scope and use only available, authorized tools. Report unavailable checks as not run.
+
+Stop for approval before publication, paid services, destructive changes or actions outside the agreed scope.
+
+### Part 2 of 2. Copy this panel together with the preceding input panel.
+
+**Task**
+
+1. Read the documents and summarize the approved requirements.
+2. Identify contradictions, missing decisions and technical risks.
+3. Recommend the final stack and explain any proposed change.
+4. Propose folders and explain their responsibilities.
+5. List necessary dependencies and configuration names.
+6. Define initialization commands and verification steps.
+7. Specify implementation order and the first complete user journey.
+8. Present the plan for review before feature implementation.
+9. After approval, create the agreed scaffold and run available setup checks.
+
+**Required Output**
+
+A setup plan followed by a factual initialization report listing files, commands, results and unresolved issues.
+
+**Quality Rules**
+
+Do not invent major features or silently alter architecture. Preserve existing work. Report checks that could not be run.
+
+---
+
+## PROMPT 09: FEATURE IMPLEMENTATION
+
+### Part 1 of 2. Replace each input placeholder with current project material. Copy both prompt panels together.
+
+**Role**
+
+Act as a software engineer.
+
+**Inputs**
+
+**REQUIREMENT ID:** [From Prompt 02: select the exact ID of the requirement to implement.]
+
+**FEATURE:** Implement the Travel Destination Explorer country-search feature. The user enters a country name and the application retrieves its information from the REST Countries API.
+
+**ACCEPTANCE CRITERIA:** The application accepts a country name, sends a request to `https://restcountries.com/v3.1/name/{country}` using `urllib.request`, parses the JSON response using `json` and displays the common name, flag, capital, region, population, area, languages and currencies when available. Empty input, invalid country names, missing fields and API failures are handled clearly.
+
+**DESIGN:** [From Prompts 03-06: attach the relevant Streamlit interface, architecture, no-database decision and API interface sections.]
+
+**CURRENT CODE:** [From Prompt 08 and earlier Prompt 09 iterations: supply actual current files or a permitted repository, not just generated summaries.]
+
+**Working Rules**
+
+Ask for essential missing information before proceeding. Label assumptions and do not invent decisions.
+
+Mode: [Advice only / Authorized execution]. In advice-only mode, provide instructions and proposed changes without editing files or running commands. In execution mode, state the approved scope and use only available, authorized tools. Report unavailable checks as not run.
+
+Stop for approval before publication, paid services, destructive changes or actions outside the agreed scope.
+
+### Part 2 of 2. Copy this panel together with the preceding input panel.
+
+**Task**
+
+1. Explain the feature flow and files to create or change.
+2. Identify affected interfaces, storage and software project state.
+3. Identify edge cases and platform-specific behavior.
+4. Implement the smallest complete solution within the approved scope.
+5. Include applicable validation, access checks, accessibility and recovery.
+6. Run relevant tests and inspect errors.
+7. Report observed results, failures and unperformed checks.
+8. Explain the changes and provide reproducible manual verification steps.
+9. Update affected documentation and describe migration needs.
+
+**Required Output**
+
+A completed change with file summary, test evidence, manual checks and remaining limitations.
+
+**Quality Rules**
+
+Avoid unrelated rewrites. Do not claim success without checking. Raise material requirement conflicts before expanding scope.
+
+---
+
+## PROMPT 10: PRODUCT PRESENTATION AND HANDOVER
+
+### Part 1 of 2. Replace each input placeholder with current project material. Copy both prompt panels together.
+
+**Role**
+
+Act as a product communication specialist.
+
+**Inputs**
+
+**AUDIENCE:** Students, faculty members and project reviewers who need to understand Travel Destination Explorer.
+
+**TIME LIMIT:** Student input: provide the permitted presentation and demonstration duration.
+
+**PRD:** [From Prompt 02: attach the current approved requirements.]
+
+**IMPLEMENTED FEATURES:** [From Prompt 09: use feature reports checked against the current working software; distinguish unfinished features.]
+
+**DEMO FLOW:** Show the user entering a country name, submitting the search and viewing the country's flag, capital, region, population, area, languages and currencies. Confirm that the journey works in the current build before demonstrating it.
+
+**EVIDENCE:** [From Prompt 12 when executed: supply real test results. Otherwise mark Unverified and provide only observed demonstration evidence.]
+
+**Working Rules**
+
+Ask for essential missing information before proceeding. Label assumptions and do not invent decisions.
+
+Mode: [Advice only / Authorized execution]. In advice-only mode, provide instructions and proposed changes without editing files or running commands. In execution mode, state the approved scope and use only available, authorized tools. Report unavailable checks as not run.
+
+Stop for approval before publication, paid services, destructive changes or actions outside the agreed scope.
+
+### Part 2 of 2. Copy this panel together with the preceding input panel.
+
+**Before Reporting Results**
+
+Complete Prompt 12 verification and any Prompt 13 retests before claiming tested behavior or release readiness. Early reviews must mark unexecuted checks Pending.
+
+**Task**
+
+1. Explain the problem, users and why the problem matters.
+2. Describe limitations of current approaches and the proposed solution.
+3. Explain how the product works and key technology decisions.
+4. Create an end-to-end demonstration narrative.
+5. Describe distinctive capabilities and impact using available evidence.
+6. State current limitations and future scope.
+7. Provide slide titles, concise content, speaker notes and timing.
+8. Provide 30-second, 1-minute, 3-minute and 5-minute versions.
+9. Add a backup demonstration plan and relevant handover steps.
+
+**Required Output**
+
+A natural presentation script with timed versions, demonstration instructions and handover information.
+
+**Quality Rules**
+
+Avoid unsupported claims and unnecessary jargon. Do not present planned capabilities as completed features.
+
+---
+
+## PROMPT 11: STAKEHOLDER AND RELEASE REVIEW
+
+### Part 1 of 2. Replace each input placeholder with current project material. Copy both prompt panels together.
+
+**Role**
+
+Act as an independent product reviewer.
+
+**Inputs**
+
+**REVIEW DEPTH: 15 OR 50 QUESTIONS:** Choose 15 questions for a quick review or 50 for a comprehensive review.
+
+**DOCUMENTS:** [From Prompts 01-10: attach relevant reviewed outputs for Travel Destination Explorer, current versions and the review objective; omit irrelevant documents with a reason.]
+
+**TEST EVIDENCE:** [From Prompt 12 when executed: attach results and evidence. During early design review write Not yet executed.]
+
+**LIMITATIONS:** [From Prompts 08-09 and 12-13 when available: collect unresolved issues; confirm their current status.]
+
+**Working Rules**
+
+Ask for essential missing information before proceeding. Label assumptions and do not invent decisions.
+
+Mode: [Advice only / Authorized execution]. In advice-only mode, provide instructions and proposed changes without editing files or running commands. In execution mode, state the approved scope and use only available, authorized tools. Report unavailable checks as not run.
+
+Stop for approval before publication, paid services, destructive changes or actions outside the agreed scope.
+
+### Part 2 of 2. Copy this panel together with the preceding input panel.
+
+**Before Reporting Results**
+
+Complete Prompt 12 verification and any Prompt 13 retests before claiming tested behavior or release readiness. Early reviews must mark unexecuted checks Pending.
+
+**Task**
+
+1. Review the problem, evidence, product scope and user experience.
+2. Assess architecture, platform choices and software project logic.
+3. Review storage, interfaces and integrations, including AI only if used.
+4. Assess security, privacy, performance and reliability.
+5. Review business value, testing, release and maintenance.
+6. Consider compatibility and future scope.
+7. For each question explain what is being evaluated.
+8. Provide an honest answer supported by the supplied evidence.
+9. Explain the reasoning in accessible language.
+10. List unresolved issues with severity, evidence needed and proposed ownership.
+
+**Required Output**
+
+The selected number of questions with evaluation purpose, supported answer, explanation and an action register.
+
+**Quality Rules**
+
+Do not invent capabilities or evidence. Mark unknown answers. Identify release blockers separately from optional work.
+
+---
+
+## PROMPT 12: TEST PLANNING AND VERIFICATION
+
+### Part 1 of 2. Replace each input placeholder with current project material. Copy both prompt panels together.
+
+**Role**
+
+Act as a quality assurance engineer.
+
+**Inputs**
+
+**PRD:** [From Prompt 02: attach requirements, IDs and acceptance criteria.]
+
+**UI/UX:** [From Prompt 03: attach interactions, failure states and accessibility expectations.]
+
+**ARCHITECTURE:** [From Prompt 04: attach component boundaries and technical constraints.]
+
+**BUILD:** [From Prompts 08-09: supply the actual runnable Travel Destination Explorer version and version ID. Before implementation write No build yet: planning only.]
+
+**ENVIRONMENTS:** Use Python, Streamlit, a supported web browser and an internet connection. Add actual Python, Streamlit and browser versions when available.
+
+**EXISTING TESTS:** [From Prompt 09 or an earlier Prompt 12 run: attach existing test files and results; write None yet on the first pass.]
+
+**Working Rules**
+
+Ask for essential missing information before proceeding. Label assumptions and do not invent decisions.
+
+Mode: [Advice only / Authorized execution]. In advice-only mode, provide instructions and proposed changes without editing files or running commands. In execution mode, state the approved scope and use only available, authorized tools. Report unavailable checks as not run.
+
+Stop for approval before publication, paid services, destructive changes or actions outside the agreed scope.
+
+### Part 2 of 2. Copy this panel together with the preceding input panel.
+
+**Task**
+
+1. Create test IDs linked to requirements and priorities.
+2. Define preconditions, non-sensitive test data and exact steps.
+3. Specify expected outcomes and pass/fail criteria.
+4. Identify target environments and manual or automated methods.
+5. Distinguish unit, integration, end-to-end and acceptance testing.
+6. Cover core flows, invalid input, boundaries and relevant access controls.
+7. Include persistence, accessibility, interruptions and performance targets.
+8. Add regression checks and relevant external-service failures.
+9. Keep actual result, evidence and status pending until execution.
+10. Report coverage gaps, defects and release blockers.
+
+**Required Output**
+
+A test matrix and execution log with test ID, requirement, steps, expected result, actual result, evidence and status.
+
+**Quality Rules**
+
+If authorized execution is available, run applicable checks and report actual results. Never label a planned or unrun test as passed.
+
+---
+
+## PROMPT 13: DEFECT INVESTIGATION AND RESOLUTION
+
+### Part 1 of 2. Replace each input placeholder with current project material. Copy both prompt panels together.
+
+**Role**
+
+Act as a debugging engineer.
+
+**Inputs**
+
+**EXPECTED BEHAVIOR:** [From Prompt 02 acceptance criteria and Prompt 12 expected results: state what Travel Destination Explorer should do.]
+
+**ACTUAL BEHAVIOR:** [Student observation or Prompt 12 execution log: state what actually happened, with evidence.]
+
+**STEPS:** [From Prompt 12 failing test, or student input: provide reproducible steps and safe test data, such as a valid country name or invalid search term.]
+
+**ERRORS:** Paste the exact relevant error or log; remove secrets and personal information.
+
+**ENVIRONMENT:** [From Prompt 12: copy the tested environment; confirm the failing version and configuration.]
+
+**CODE:** [From Prompt 09 or the current repository: attach the affected files, recent changes and checks already tried.]
+
+**Working Rules**
+
+Ask for essential missing information before proceeding. Label assumptions and do not invent decisions.
+
+Mode: [Advice only / Authorized execution]. In advice-only mode, provide instructions and proposed changes without editing files or running commands. In execution mode, state the approved scope and use only available, authorized tools. Report unavailable checks as not run.
+
+Stop for approval before publication, paid services, destructive changes or actions outside the agreed scope.
+
+### Part 2 of 2. Copy this panel together with the preceding input panel.
+
+**Task**
+
+1. Restate the defect and identify missing evidence.
+2. Reproduce the behavior or provide precise reproduction instructions.
+3. List plausible causes and checks that distinguish them.
+4. Identify the supported root cause and label unproven hypotheses.
+5. Propose the smallest fix with affected files and data.
+6. Apply the fix only within the authorized scope.
+7. Repeat the original scenario and relevant regression checks.
+8. Report actual results, remaining issues and recovery steps.
+9. Explain why the fix addresses the cause.
+
+**Required Output**
+
+A defect report with evidence, cause, changes, verification results and any follow-up work.
+
+**Quality Rules**
+
+Do not hide errors or remove valid checks to force success. Preserve unrelated behavior. Obtain approval before destructive changes to real data.
+
+---
+
+## PROMPT 14: DEPLOYMENT AND RELEASE MANAGEMENT
+
+### Part 1 of 2. Replace each input placeholder with current project material. Copy both prompt panels together.
+
+**Role**
+
+Act as a release engineer.
+
+**Inputs**
+
+**ARCHITECTURE:** [From Prompt 04: attach the latest approved Travel Destination Explorer architecture and deployment decisions.]
+
+**REPOSITORY:** [From Prompt 08, updated by Prompt 09: provide the current repository and release commit or version.]
+
+**BUILD:** [From Prompt 09, verified through Prompt 12: identify the exact release candidate; do not substitute a plan for a build.]
+
+**TEST EVIDENCE:** [From Prompt 12: attach executed test results and retests after Prompt 13 fixes; include Prompt 11 review actions and approval status.]
+
+**CHANNEL:** Confirm the intended website hosting or demonstration channel, account permissions and named approver. Google AI Studio is the code-generation tool; do not assume it is the deployment platform.
+
+**CONFIGURATION:** [From Prompts 07-08: use documented configuration names; never include secrets in the prompt. The REST Countries API is public; do not invent a required API key.]
+
+**Working Rules**
+
+Ask for essential missing information before proceeding. Label assumptions and do not invent decisions.
+
+Mode: [Advice only / Authorized execution]. In advice-only mode, provide instructions and proposed changes without editing files or running commands. In execution mode, state the approved scope and use only available, authorized tools. Report unavailable checks as not run.
+
+Stop for approval before publication, paid services, destructive changes or actions outside the agreed scope.
+
+### Part 2 of 2. Copy this panel together with the preceding input panel.
+
+**Task**
+
+1. Identify version, prerequisites, dependencies and build steps.
+2. Separate environment configuration where relevant.
+3. Validate credentials, permissions and configuration handling.
+4. Plan data backup, migration and compatibility, or mark not applicable.
+5. Define hosting, signing, packaging or distribution requirements.
+6. Specify pre-release checks and go/no-go criteria.
+7. Assign release steps and owners.
+8. Define post-release smoke tests and expected outcomes.
+9. Document failure triggers, rollback and data recovery implications.
+10. Prepare monitoring, release notes, support and update ownership.
+
+**Required Output**
+
+An actionable release checklist with approval points, verification evidence, recovery instructions and owners.
+
+**Quality Rules**
+
+Verify service-specific steps against current official documentation during implementation. Do not claim deployment succeeded without checking the released system.
