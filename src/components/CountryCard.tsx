@@ -17,7 +17,6 @@ import {
   Calculator,
   Calendar
 } from 'lucide-react';
-import { InteractiveLandmarkMap } from './InteractiveLandmarkMap';
 
 interface CountryCardProps {
   country: CountryDetails;
@@ -26,7 +25,6 @@ interface CountryCardProps {
   allMatches?: CountryDetails[];
   onSelectMatch?: (country: CountryDetails) => void;
   onOpenTripPlanner?: () => void;
-  onAskAboutLandmark?: (landmarkName: string) => void;
 }
 
 export const CountryCard: React.FC<CountryCardProps> = ({
@@ -35,8 +33,7 @@ export const CountryCard: React.FC<CountryCardProps> = ({
   matchesCount = 1,
   allMatches = [],
   onSelectMatch,
-  onOpenTripPlanner,
-  onAskAboutLandmark
+  onOpenTripPlanner
 }) => {
   const [copied, setCopied] = useState(false);
   const [showCoatOfArms, setShowCoatOfArms] = useState(false);
@@ -395,14 +392,6 @@ Borders: ${country.borders.length > 0 ? country.borders.join(', ') : 'None (Isla
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Interactive Map & Major Landmarks Section */}
-        <div className="pt-2 border-t border-slate-100">
-          <InteractiveLandmarkMap
-            country={country}
-            onAskAboutLandmark={onAskAboutLandmark}
-          />
         </div>
       </div>
     </div>

@@ -76,29 +76,12 @@ export const TripPlannerSection: React.FC<TripPlannerSectionProps> = ({
   const [copied, setCopied] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Sync starting city and restore any previously saved itinerary when country changes
+  // Sync starting city when country changes
   React.useEffect(() => {
     if (country?.capital) {
       setStartingCity(country.capital);
     }
-
-    if (country?.id) {
-      try {
-        const savedMap = localStorage.getItem('travel_explorer_itineraries_v2');
-        if (savedMap) {
-          const parsed = JSON.parse(savedMap);
-          if (parsed && parsed[country.id]) {
-            setItinerary(parsed[country.id]);
-            setActiveDayIndex(0);
-            return;
-          }
-        }
-      } catch (e) {
-        console.warn('Could not restore saved itinerary', e);
-      }
-      setItinerary(null);
-    }
-  }, [country?.id, country?.capital]);
+  }, [country?.capital]);
 
   const handleGenerate = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -132,16 +115,6 @@ export const TripPlannerSection: React.FC<TripPlannerSectionProps> = ({
       const result = await generateItinerary(request);
       setItinerary(result);
       setActiveDayIndex(0);
-
-      // Save to localStorage map
-      try {
-        const savedMap = localStorage.getItem('travel_explorer_itineraries_v2');
-        const parsed = savedMap ? JSON.parse(savedMap) : {};
-        parsed[country.id] = result;
-        localStorage.setItem('travel_explorer_itineraries_v2', JSON.stringify(parsed));
-      } catch (e) {
-        console.warn('Could not save itinerary to localStorage', e);
-      }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
       setError(msg);
