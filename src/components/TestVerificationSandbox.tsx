@@ -176,6 +176,110 @@ export const TestVerificationSandbox: React.FC = () => {
         }
         return { success: false, details: 'Border code could not be resolved.', latencyMs: latency };
       }
+    },
+    {
+      id: 'TC-07',
+      reqId: 'AI-CHAT-01',
+      name: 'Chatbot Country Override (Japan Selected, User asks about India)',
+      category: 'Functional',
+      inputDesc: 'Query: "What are the best street foods to try in India?", Selected Country: Japan',
+      expectedDesc: 'Prioritizes mentioned country India over selected country Japan. Response focuses on Indian street food (Chaat, Biryani, Dosa, Rupee), not Tokyo or Yen.',
+      runTest: async () => {
+        const start = performance.now();
+        const japanContext = {
+          commonName: 'Japan',
+          officialName: 'Japan',
+          capital: 'Tokyo',
+          region: 'Asia',
+          subregion: 'Eastern Asia',
+          population: '125,836,021',
+          area: '377,930 km²',
+          languages: ['Japanese'],
+          currencies: [{ code: 'JPY', name: 'Japanese yen', symbol: '¥' }],
+          borders: []
+        };
+
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: 'What are the best street foods to try in India?',
+            countryContext: japanContext
+          })
+        });
+
+        const latency = Math.round(performance.now() - start);
+        if (!res.ok) {
+          return { success: false, details: `HTTP ${res.status}: Failed to reach chat API`, latencyMs: latency };
+        }
+
+        const data = await res.json();
+        const text = (data.reply || '').toLowerCase();
+        const detectedCountry = data.detectedCountry;
+
+        const talksAboutIndia = text.includes('india') || text.includes('chaat') || text.includes('biryani') || text.includes('dosa') || text.includes('puri') || text.includes('rupee') || detectedCountry === 'India';
+        const doesNotDefaultToJapan = !text.includes('tokyo') && !text.includes('japanese yen');
+
+        const success = talksAboutIndia && doesNotDefaultToJapan;
+        return {
+          success,
+          details: success
+            ? `Successfully prioritized India! Detected: ${detectedCountry || 'India'}. Speed: ${latency}ms.`
+            : `Mismatch detected. Reply: "${data.reply?.slice(0, 100)}..."`,
+          latencyMs: latency
+        };
+      }
+    },
+    {
+      id: 'TC-08',
+      reqId: 'AI-CHAT-02',
+      name: 'Chatbot Default Context (General question uses selected country Japan)',
+      category: 'Functional',
+      inputDesc: 'Query: "What is the capital city and what should I wear?", Selected Country: Japan',
+      expectedDesc: 'When no country is mentioned in the query, the chatbot defaults to the currently selected country (Japan). Response references Tokyo or Japanese weather/customs.',
+      runTest: async () => {
+        const start = performance.now();
+        const japanContext = {
+          commonName: 'Japan',
+          officialName: 'Japan',
+          capital: 'Tokyo',
+          region: 'Asia',
+          subregion: 'Eastern Asia',
+          population: '125,836,021',
+          area: '377,930 km²',
+          languages: ['Japanese'],
+          currencies: [{ code: 'JPY', name: 'Japanese yen', symbol: '¥' }],
+          borders: []
+        };
+
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: 'What is the capital city and what should I wear?',
+            countryContext: japanContext
+          })
+        });
+
+        const latency = Math.round(performance.now() - start);
+        if (!res.ok) {
+          return { success: false, details: `HTTP ${res.status}: Failed to reach chat API`, latencyMs: latency };
+        }
+
+        const data = await res.json();
+        const text = (data.reply || '').toLowerCase();
+        const detectedCountry = data.detectedCountry;
+
+        const talksAboutJapan = text.includes('tokyo') || text.includes('japan') || text.includes('yen') || detectedCountry === 'Japan';
+
+        return {
+          success: talksAboutJapan,
+          details: talksAboutJapan
+            ? `Correctly answered using default selected country Japan (Capital: Tokyo). Speed: ${latency}ms.`
+            : `Did not use Japan context. Reply: "${data.reply?.slice(0, 100)}..."`,
+          latencyMs: latency
+        };
+      }
     }
   ];
 
